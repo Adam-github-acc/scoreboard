@@ -3,11 +3,19 @@ import './App.css';
 
 const App = () => {
   const scoreArray = ['0', '15', '30', '40', 'AD'];
+  const [player1Name, setPlayer1Name] = useState('');
+  const [player2Name, setPlayer2Name] = useState('');
   const [player1Points, setPlayer1Points] = useState(0);
   const [player2Points, setPlayer2Points] = useState(0);
   const [player1Game, setPlayer1Game] = useState(0);
   const [player2Game, setPlayer2Game] = useState(0);
   const [winner, setWinner] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setPlayer1Name(e.target[0].value);
+    setPlayer2Name(e.target[1].value);
+  };
 
   const winCheck = (winner) => {
     setPlayer1Game(0);
@@ -27,7 +35,7 @@ const App = () => {
         player1Game !== player2Game &&
         player1Game > player2Game
       )
-        winCheck('Player1');
+        winCheck(player1Name);
       else setPlayer1Game((prev) => prev + 1);
     } else if (player1Points === 3 && player2Points === 4) {
       setPlayer2Points((prev) => prev - 1);
@@ -46,22 +54,36 @@ const App = () => {
         player1Game !== player2Game &&
         player1Game < player2Game
       )
-        winCheck('Player2');
+        winCheck(player2Name);
       else setPlayer2Game((prev) => prev + 1);
     } else if (player2Points === 3 && player1Points === 4) {
       setPlayer1Points((prev) => prev - 1);
     } else setPlayer2Points((prev) => prev + 1);
   };
 
-  return (
+  return !player1Name && !player2Name ? (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Player 1 name:
+          <input type="text" name="Player1" defaultValue={''} />
+        </label>
+        <label>
+          Player 2 name:
+          <input type="text" name="Player2" defaultValue={''} />
+        </label>
+        <button type="submit">Play Game</button>
+      </form>
+    </div>
+  ) : (
     <div>
       <div>
-        <div>Winner: {winner}</div>
+        {winner && <div>Winner: {winner}</div>}
         <div>
-          Player1 {player1Game} {scoreArray[player1Points]}
+          {player1Name} {player1Game} {scoreArray[player1Points]}
         </div>
         <div>
-          Player2 {player2Game} {scoreArray[player2Points]}
+          {player2Name} {player2Game} {scoreArray[player2Points]}
         </div>
       </div>
       <div>
