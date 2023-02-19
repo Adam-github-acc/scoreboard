@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import './App.css';
-import Reaction from './components/Reaction/Reaction';
 
 const App = () => {
   const scoreArray = ['0', '15', '30', '40', 'AD'];
@@ -91,7 +90,6 @@ const App = () => {
         <div onClick={player1Win}>Player1</div>
         <div onClick={player2Win}>Player2</div>
       </div>
-      <Reaction />
     </div>
   );
 };
