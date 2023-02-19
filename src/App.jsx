@@ -77,13 +77,22 @@ const App = () => {
     </div>
   ) : (
     <div>
-      <div>
-        {winner && <div>Winner: {winner}</div>}
-        <div>
-          {player1Name} {player1Game} {scoreArray[player1Points]}
+      {winner && <div>Winner: {winner}</div>}
+      <div className="scoreboard">
+        <div className="player-names">
+          <div>{player1Name}</div>
+          <div className="middle">Players</div>
+          <div>{player2Name}</div>
         </div>
-        <div>
-          {player2Name} {player2Game} {scoreArray[player2Points]}
+        <div className="games">
+          <div>{player1Game}</div>
+          <div className="middle">Game</div>
+          <div>{player2Game}</div>
+        </div>
+        <div className="points">
+          <div>{scoreArray[player1Points]}</div>
+          <div className="middle">Points</div>
+          <div>{scoreArray[player2Points]}</div>
         </div>
       </div>
       <div>
