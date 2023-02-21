@@ -1,0 +1,11 @@
+.square {
+  width: 7vw;
+  height: 7vw;
+  background-color: green;
+  border: 2px solid rgb(209, 209, 0);
+  color: rgb(209, 209, 0);
+  font-size: 4rem;
+  box-sizing: border-box;
+  cursor: pointer;
+  outline: none;
+}

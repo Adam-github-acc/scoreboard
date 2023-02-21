@@ -1,13 +1,18 @@
+.header {
+  font-size: 3rem;
+  display: flex;
+  justify-content: center;
+}
 .scoreboard {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
   border: 2px solid rgb(209, 209, 0);
-  width: 60vw;
-  height: 10rem;
+  width: 25vw;
+  height: 8rem;
   background-color: green;
-  margin: auto;
+  margin: 1rem auto;
   text-align: center;
   cursor: default;
 }
@@ -15,7 +20,7 @@
 .points,
 .player-names {
   color: rgb(209, 209, 0);
-  font-size: 3rem;
+  font-size: 2rem;
   margin: 1rem;
 }
 .middle {
@@ -41,4 +46,23 @@
 .name-input button {
   padding: 0.5rem;
   font-size: large;
+}
+.game {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: auto;
+  align-items: center;
+}
+.board {
+  display: grid;
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  margin: auto;
+}
+.players {
+  display: flex;
+  margin: 1rem auto;
+  justify-content: center;
+  gap: 2rem;
+  font-size: 1.5rem;
 }

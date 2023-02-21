@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './App.css';
-import { Square } from './components/Square';
+import { Square } from './components/Square/Square.jsx';
 
 const App = () => {
   const scoreArray = ['0', '15', '30', '40', 'AD'];
@@ -28,7 +28,11 @@ const App = () => {
   };
 
   const handleClick = (i) => {
-    if (calculateWinner(squares) || squares[i]) {
+    const winningSymbol = calculateWinner(squares);
+    if (winningSymbol || squares[i]) {
+      if (winningSymbol === 'X') player1Win();
+      else player2Win();
+      handleRestart();
       return;
     }
 
@@ -56,8 +60,7 @@ const App = () => {
         squares[a] === squares[b] &&
         squares[a] === squares[c]
       ) {
-        if (squares[a] === 'X') player1Win();
-        else player2Win();
+        return squares[a];
       }
     }
     return null;
@@ -107,6 +110,8 @@ const App = () => {
     } else setPlayer2Points((prev) => prev + 1);
   };
 
+  let roundWinner = calculateWinner(squares);
+
   return !player1Name && !player2Name ? (
     <div>
       <form onSubmit={handleSubmit} className="name-input">
@@ -123,6 +128,7 @@ const App = () => {
     </div>
   ) : (
     <div>
+      <h1 className="header">TIC-TAC-TOE</h1>
       {winner && <div>Winner: {winner}</div>}
       <div className="scoreboard">
         <div className="player-names">
@@ -141,20 +147,26 @@ const App = () => {
           <div>{scoreArray[player2Points]}</div>
         </div>
       </div>
-      <div>
-        <div onClick={player1Win}>Player1</div>
-        <div onClick={player2Win}>Player2</div>
+      <div className="players">
+        <div>{player1Name}: X</div>
+        <div>{player2Name}: O</div>
       </div>
-      <div className="board">
-        <div>
+      <div className="game">
+        <div className="board">
           {squares.map((square, i) => (
             <Square key={i} value={square} onClick={() => handleClick(i)} />
           ))}
         </div>
-        <div className="status">{status}</div>
-        <button className="restart" onClick={handleRestart}>
-          Restart Game!
-        </button>
+        <div>Next turn {isX ? player1Name : player2Name}</div>
+        <button onClick={handleRestart}>Restart Game</button>
+        {roundWinner ? (
+          <div>
+            winner:{' '}
+            {roundWinner === 'X'
+              ? handleClick() && player1Name
+              : handleClick() && player2Name}
+          </div>
+        ) : null}
       </div>
     </div>
   );
