@@ -63,7 +63,7 @@ const App = () => {
 
   return !player1Name && !player2Name ? (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="name-input">
         <label>
           Player 1 name:
           <input type="text" name="Player1" defaultValue={''} />
