@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './App.css';
+import { Square } from './components/Square';
 
 const App = () => {
   const scoreArray = ['0', '15', '30', '40', 'AD'];
@@ -10,11 +11,56 @@ const App = () => {
   const [player1Game, setPlayer1Game] = useState(0);
   const [player2Game, setPlayer2Game] = useState(0);
   const [winner, setWinner] = useState('');
+  const [squares, setSquares] = useState(Array(9).fill(null));
+  const [isX, setIsX] = useState(true);
+  const [starter, setStarter] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setPlayer1Name(e.target[0].value);
     setPlayer2Name(e.target[1].value);
+  };
+
+  const handleRestart = () => {
+    setIsX(starter);
+    setStarter((prev) => !prev);
+    setSquares(Array(9).fill(null));
+  };
+
+  const handleClick = (i) => {
+    if (calculateWinner(squares) || squares[i]) {
+      return;
+    }
+
+    squares[i] = isX ? 'X' : 'O';
+    setSquares(squares);
+    setIsX(!isX);
+  };
+
+  const calculateWinner = (squares) => {
+    const winningPatterns = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+
+    for (let i = 0; i < winningPatterns.length; i++) {
+      const [a, b, c] = winningPatterns[i];
+      if (
+        squares[a] &&
+        squares[a] === squares[b] &&
+        squares[a] === squares[c]
+      ) {
+        if (squares[a] === 'X') player1Win();
+        else player2Win();
+      }
+    }
+    return null;
   };
 
   const winCheck = (winner) => {
@@ -98,6 +144,17 @@ const App = () => {
       <div>
         <div onClick={player1Win}>Player1</div>
         <div onClick={player2Win}>Player2</div>
+      </div>
+      <div className="board">
+        <div>
+          {squares.map((square, i) => (
+            <Square key={i} value={square} onClick={() => handleClick(i)} />
+          ))}
+        </div>
+        <div className="status">{status}</div>
+        <button className="restart" onClick={handleRestart}>
+          Restart Game!
+        </button>
       </div>
     </div>
   );
